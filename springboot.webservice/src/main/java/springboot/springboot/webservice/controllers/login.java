@@ -1,4 +1,4 @@
-package springboot.springboot.webservice;
+package springboot.springboot.webservice.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +14,7 @@ public class login {
 		return "Welcome";
 	}
 	else{
-		return "Bhag Bh**dike";
+		return "Not Welcome";
 	}
    }
 	
@@ -25,7 +25,7 @@ public class login {
 		return "Bye Mushtaque";
 	}
 	else{
-		return "Bhag Bh**dike";
+		return "Get Lost";
 	}
    }
 }
