@@ -18,6 +18,18 @@ public class login {
 	}
    }
 	
+	public String profile(String username)
+	{
+	if(username.equals("mushtaque"))
+	{
+		return "Mushtaque Ahmed";
+	}
+	else{
+		return "Error";
+	}
+   }
+	
+	
 	public String logout(String username)
 	{
 	if(username.equals("mushtaque"))
