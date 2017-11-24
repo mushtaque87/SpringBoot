@@ -59,6 +59,51 @@ public class DatabaseManager {
 		return mDatabaseConnection.executeUpdateQuerySQL(sqlQuery);
 	}
 	
+	public int delete(String table, String whereClause) {
+		if (!mDatabaseConnection.isOpen()) {
+			throw new IllegalStateException("database not open");
+		}
+		
+		return mDatabaseConnection.executeUpdateQuerySQL("DELETE FROM " + table + (null != whereClause ? " WHERE " + whereClause : ""));
+	}
+	
+	public int update(String table, ContentValues values, String whereClause) {
+		if (!mDatabaseConnection.isOpen()) {
+			throw new IllegalStateException("database not open");
+		}
+		
+		if (values == null || values.size() == 0) {
+            throw new IllegalArgumentException("Empty values");
+        }
+		
+		StringBuilder sql = new StringBuilder(120);
+        sql.append("UPDATE ");
+        sql.append(table);
+        sql.append(" SET ");
+        
+        Set<Map.Entry<String, Object>> entrySet = values.valueSet();
+        Iterator<Map.Entry<String, Object>> entriesIter = entrySet.iterator();
+
+        while (entriesIter.hasNext()) {
+            Map.Entry<String, Object> entry = entriesIter.next();
+            sql.append(entry.getKey());
+            sql.append("=");
+            sql.append("'");
+            sql.append(entry.getValue());
+            sql.append("'");
+            if (entriesIter.hasNext()) {
+                sql.append(", ");
+            }
+        }
+        
+        if (null != whereClause) {
+            sql.append(" WHERE ");
+            sql.append(whereClause);
+        }
+		
+        return mDatabaseConnection.executeUpdateQuerySQL(sql.toString());
+	}
+	
 	private String prepareInsertSqlQuery(String table, ContentValues initialValues) {
 		// Measurements show most sql lengths <= 152
 		StringBuilder sql = new StringBuilder(152);

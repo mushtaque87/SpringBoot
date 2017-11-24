@@ -30,8 +30,8 @@ public class serviceController {
 	        return new login().login(name);
 	    }
 	
-	@RequestMapping(value = "/details", method = RequestMethod.POST)
-	 public @ResponseBody springboot.springboot.models.Details Details(@RequestBody springboot.springboot.models.Details details) {
+	@RequestMapping(value = "/insertStudent", method = RequestMethod.POST)
+	 public @ResponseBody  springboot.springboot.models.Details insertDetails(@RequestBody springboot.springboot.models.Details details) {
 		 System.out.println(details.getName());
 		 //System.out.println(details.getGender());
 //		 	details.setGender("Female");
@@ -53,6 +53,32 @@ public class serviceController {
 		 	
 	      
 	    }
+	
+	
+	@RequestMapping(value = "/deleteStudent", method = RequestMethod.DELETE)
+	 public @ResponseBody springboot.springboot.models.Details deleteDetails(@RequestBody springboot.springboot.models.Details details) {
+		 System.out.println(details.getName());
+		 //System.out.println(details.getGender());
+//		 	details.setGender("Female");
+//		 	details.setName("Fahemid");
+//		 	details.setGrade("First Grade");
+		 	
+		 	DatabaseConnection dbconnect = new DatabaseConnection();
+		 	DatabaseManager manager = DatabaseManager.getInstance();
+		 	
+		 	ContentValues content = new ContentValues();
+		 	
+		 	content.put("name", details.getName());
+		 	content.put("rollno", details.getName());
+		 	content.put("grade", details.getGrade());
+		 	content.put("rollno", details.getRollno());
+		 	
+		 	manager.insert("student", content);
+	        return details;
+		 	
+	      
+	    }
+	
 	
 	
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
